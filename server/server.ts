@@ -26,6 +26,15 @@ io.on('connection', (socket) => {
 
     socket.emit('new-message', `new message: ${msg}`)
   });
+
+  socket.on('create-new-game', () => {})
+
+  socket.on('join-to-game', (gameId, userData) => {
+    socket.join(gameId)
+
+    socket.to(gameId).emit('uset-join', userData)
+  })
+
 });
 
 server.listen(3000, () => {
