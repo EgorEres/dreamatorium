@@ -8,8 +8,8 @@ export const Games = () => {
   return (
     <PageWrapper>
       <div>
-        <Button name="Cоздать игру" onClick={createGame} />
         <div>список игр куда можно присоеденится</div>
+        <Button name="Cоздать игру" onClick={createGame} />
       </div>
     </PageWrapper>
   );
