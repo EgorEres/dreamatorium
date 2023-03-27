@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useSocket } from '../../shared/api/socket-hook';
+import { useSocket } from '../../shared/api/socket';
 
 export const Chat = () => {
   const { isConnected, socket } = useSocket();

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import socket from '../../shared/api/socket';
 
 interface Game {
   id: string;
@@ -9,13 +10,15 @@ interface Game {
 
 interface GamesState {
   games: Map<string, Game>,
-  createGame: (id: string) => void;
+  createGame: () => void;
 }
 
 export const useGamesStore = create<GamesState>()(devtools((set) => ({
   games: new Map<string, Game>(),
-  createGame: (id) => set(({ games }) => {
-    games.set(id, { id, userIds: [], name: `New game ${games.size + 1}` });
-    return { games };
-  }),
+  createGame: () => {
+    socket.emit('create_new_game', (response: any, a: any, b: any) => {
+      console.log('check response:', response, a, b);
+    });
+    set(({ games }) => ({ games }));
+  },
 }), { name: 'games-store' }));

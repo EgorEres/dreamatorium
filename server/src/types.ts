@@ -1,7 +1,7 @@
-export enum SOCKET_EVENTS {
+export enum SocketEvents {
   // common events
   disconnect = 'disconnect',
-  
+
   // game events
   create_new_game = 'create_new_game',
   join_to_game = 'join_to_game',

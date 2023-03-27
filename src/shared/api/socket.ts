@@ -38,3 +38,5 @@ export const useSocket = () => {
 
   return { isConnected, socket };
 };
+
+export default socket;
