@@ -1,30 +1,36 @@
-import { useCallback, useEffect } from "react";
-import { useSocket } from "../../shared/api/socket-hook";
+import { useCallback, useEffect } from 'react';
+import { useSocket } from '../../shared/api/socket-hook';
 
 export const Chat = () => {
-  const { isConnected, socket } = useSocket()
+  const { isConnected, socket } = useSocket();
 
   useEffect(() => {
-    console.log('check connected:', socket.connected)
+    console.log('check connected:', socket.connected);
 
     const showNewMessage = (message: string) => {
-      console.log(message)
-    }
+      console.log(message);
+    };
 
     if (isConnected) {
-      console.log('try to emit')
-      socket.on('new-message', showNewMessage)
-
+      console.log('try to emit');
+      socket.on('new-message', showNewMessage);
     }
 
     return () => {
-      socket.off('new-message', showNewMessage)
-    }
-  }, [isConnected])
+      socket.off('new-message', showNewMessage);
+    };
+  }, [socket, isConnected]);
 
   const handleClick = useCallback(() => {
-    socket.emit('message', 'message by click')
-  }, [isConnected])
+    socket.emit('message', 'message by click');
+  }, [socket]);
 
-  return <button onClick={handleClick}>send the message</button>
-}
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+    >
+      send the message
+    </button>
+  );
+};

@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-import { io } from 'socket.io-client'
+import { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 const URL = 'http://localhost:3000';
 const socket = io(URL, {
-  autoConnect: false
+  autoConnect: false,
 });
 
 export const useSocket = () => {
-  const [isConnected, setIsConnected] = useState(socket.connected)
+  const [isConnected, setIsConnected] = useState(socket.connected);
 
   useEffect(() => {
     socket.connect();
@@ -18,13 +18,13 @@ export const useSocket = () => {
 
   useEffect(() => {
     function onConnect() {
-      console.log('event connect')
-      setIsConnected(true)
+      console.log('event connect');
+      setIsConnected(true);
     }
 
     function onDisconnect() {
-      console.log('event disconnect')
-      setIsConnected(false)
+      console.log('event disconnect');
+      setIsConnected(false);
     }
 
     socket.on('connect', onConnect);
@@ -36,5 +36,5 @@ export const useSocket = () => {
     };
   });
 
-  return { isConnected, socket }
-}
+  return { isConnected, socket };
+};

@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface Profile {
   id: string;
@@ -16,8 +16,8 @@ export const useProfileStore = create<ProfileState>()(devtools((set) => ({
   updateProfile: (data: Profile) => set(
     () => ({ profile: data }),
     false,
-    'profile/update'
+    'profile/update',
   ),
 }), {
-  name: 'profile-store'
-}))
+  name: 'profile-store',
+}));

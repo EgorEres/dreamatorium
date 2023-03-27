@@ -1,6 +1,8 @@
 import express from 'express'
 import http from 'http'
 import { Server } from "socket.io"
+import { SOCKET_EVENTS } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 const server = http.createServer(app);
@@ -11,8 +13,17 @@ const io = new Server(server, {
 });
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
+  res.send('<h1>Server is working!</h1>');
 });
+
+
+interface Game {
+  gameId: string;
+  name: string;
+  userIds: string[];
+}
+
+const games = new Map<string, Game>();
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -27,14 +38,22 @@ io.on('connection', (socket) => {
     socket.emit('new-message', `new message: ${msg}`)
   });
 
-  socket.on('create-new-game', () => {})
+  socket.on(SOCKET_EVENTS.create_new_game, (userId, name) => {
+    const gameId = uuidv4()
+    const newGame: Game = {
+      gameId,
+      name: name || `new game ${games.size + 1}`,
+      userIds: [userId]
+    }
 
-  socket.on('join-to-game', (gameId, userData) => {
+    games.set(gameId, newGame)
     socket.join(gameId)
-
-    socket.to(gameId).emit('uset-join', userData)
   })
 
+  socket.on(SOCKET_EVENTS.join_to_game, (gameId, userData) => {
+    socket.join(gameId)
+    socket.to(gameId).emit(SOCKET_EVENTS.user_joined, userData)
+  })
 });
 
 server.listen(3000, () => {

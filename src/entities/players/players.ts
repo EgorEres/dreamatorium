@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface Player {
   id: string;
@@ -20,13 +20,13 @@ export const usePlayersStore = create<PlayersState>()(devtools((set) => ({
   players: {},
   addPlayer: (playersData) => set(
     ({ players }) => ({
-      players: {...players, [playersData.id]: playersData}
+      players: { ...players, [playersData.id]: playersData },
     }),
     false,
-    'players/add'
+    'players/add',
   ),
   disconnectPlayers: (playersId) => set(({ players }) => {
-    const player = players[playersId]
+    const player = players[playersId];
     if (player) {
       return {
         players: {
@@ -34,12 +34,12 @@ export const usePlayersStore = create<PlayersState>()(devtools((set) => ({
           [playersId]: {
             ...player,
             connected: false,
-          }
-        }
-      }
+          },
+        },
+      };
     }
-    return { players }
+    return { players };
   }),
 }), {
-  name: 'players-store'
-}))
+  name: 'players-store',
+}));

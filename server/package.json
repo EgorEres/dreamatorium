@@ -5,7 +5,7 @@
   "author": "Eresko Egor",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon server.ts",
+    "server": "nodemon ./src/server.ts",
     "build": "tsc --project ./"
   },
   "dependencies": {
